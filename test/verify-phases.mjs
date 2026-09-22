@@ -6,11 +6,15 @@
 
 import Database from 'better-sqlite3';
 import path from 'path';
+import fs from 'fs';
 import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const DB_PATH = path.join(__dirname, '..', 'database', 'finance.db');
+const DB_PATH = process.env.DATABASE_PATH ||
+  (fs.existsSync(path.join(__dirname, '..', 'data_db', 'finanzas.db'))
+    ? path.join(__dirname, '..', 'data_db', 'finanzas.db')
+    : path.join(__dirname, '..', 'database', 'finance.db'));
 
 // ─── Test runner ──────────────────────────────────────────────────────────────
 

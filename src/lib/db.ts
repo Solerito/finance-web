@@ -5,20 +5,19 @@ import fs from 'fs';
 // ─── DB path & singleton ──────────────────────────────────────────────────────
 //
 // Priority:
-//  1. DATABASE_PATH env var (set this on the server to point to finanzas.db)
-//     e.g. DATABASE_PATH=/home/user/docker/gestor-finanzas/app/data/finanzas.db
-//  2. ./database/finance.db  (local development default)
+//  1. DATABASE_PATH env var (optional override)
+//  2. path.join(process.cwd(), 'data_db', 'finanzas.db') (default absolute path)
 //
 
 function resolveDbPath(): string {
   if (process.env.DATABASE_PATH) {
     return process.env.DATABASE_PATH;
   }
-  const DB_DIR = path.join(process.cwd(), 'database');
-  if (!fs.existsSync(DB_DIR)) {
-    fs.mkdirSync(DB_DIR, { recursive: true });
+  const dbDir = path.join(process.cwd(), 'data_db');
+  if (!fs.existsSync(dbDir)) {
+    fs.mkdirSync(dbDir, { recursive: true });
   }
-  return path.join(DB_DIR, 'finance.db');
+  return path.join(dbDir, 'finanzas.db');
 }
 
 let _db: Database.Database | null = null;
