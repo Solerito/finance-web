@@ -1,4 +1,8 @@
 import { Suspense } from 'react';
+
+// Fuerza SSR puro: Next.js no pre-renderiza esta página en build time.
+// Necesario porque accede a SQLite, que solo existe en runtime (volumen Docker).
+export const dynamic = 'force-dynamic';
 import { History } from 'lucide-react';
 import { searchTransactions, getHistoryCategories, type HistoryFilters } from './actions';
 import { HistoryFilters as HistoryFiltersBar } from '@/components/history/HistoryFilters';
